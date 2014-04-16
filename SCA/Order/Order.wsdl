@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions
+     name="Order"
+     targetNamespace="http://www.noisyroads/Order/"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:tns="http://www.noisyroads/Order/"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+    >
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://www.noisyroads/Order/" xmlns:pref="http://www.noisyroads.com/Order">
+            <xsd:import schemaLocation="xsd/Order.xsd" namespace="http://www.noisyroads.com/Order"/>
+            <xsd:element name="request" type="pref:Order"/>
+            <xsd:element name="response" type="tns:status"/>
+            <xsd:simpleType name="status">
+                <xsd:restriction base="xsd:string"/>
+            </xsd:simpleType>
+            <xsd:complexType name="Order">
+                <xsd:sequence>
+                    <xsd:element ref="pref:order"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="receiveOrderRequest">
+        <wsdl:part name="parameters" element="tns:request"/>
+    </wsdl:message>
+    <wsdl:message name="receiveOrderResponse">
+        <wsdl:part name="parameters" element="tns:response"/>
+    </wsdl:message>
+    <wsdl:portType name="Order">
+        <wsdl:operation name="receiveOrder">
+            <wsdl:input message="tns:receiveOrderRequest"/>
+            <wsdl:output message="tns:receiveOrderResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="OrderDirectBinding" type="tns:Order">
+        <soap12:binding style="document" transport="http://xmlns.oracle.com/soa/direct"/>
+        <wsdl:operation name="receiveOrder">
+            <soap12:operation soapAction="" soapActionRequired="false"/>
+            <wsdl:input>
+                <soap12:body use="literal" parts="payload"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal" parts="payload"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="OrderService">
+        <wsdl:port name="OrderDirectBindingPort" binding="tns:OrderDirectBinding">
+            <soap12:address location="t3://www.noisyroads.com/Order"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

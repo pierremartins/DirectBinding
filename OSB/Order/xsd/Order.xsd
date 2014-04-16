@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.noisyroads.com/Order" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.noisyroads.com/Order">
+
+
+
+
+
+
+
+
+    <complexType name="Order">
+    	<sequence>
+    		<element name="creditCardType" type="string"></element>
+    		<element name="creditCardNumber" type="string"></element>
+    		<element name="value" type="string"></element>
+    		<element name="product" type="string"></element>
+    		<element name="quantity" type="string"></element>
+    	</sequence>
+    </complexType>
+
+    <element name="order" type="tns:Order"></element>
+
+
+
+    <simpleType name="Status">
+    	<restriction base="string"></restriction>
+    </simpleType>
+
+    <element name="status" type="tns:Status"></element>
+</schema>
